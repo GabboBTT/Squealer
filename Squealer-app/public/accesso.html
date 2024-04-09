@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squealer</title>
+    <link rel="stylesheet" href="accesso.css">
+    <link rel="icon" type="image/x-icon" href="../img/icon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+    <div class="formsign">
+        <div>
+            <h3>Have an Account?</h3>
+            <button id="signin">Sign In</button>
+        </div>
+        <div>
+            <h3>Don't have an Account?</h3>
+            <button id="signup">Sign Up</button>
+            <p id="notsign" class="notsign">Enter without sign in</p>
+        </div>
+    </div>
+    <div class="formsignover" id="formsign">
+        <img src="../img/icon.png" alt="icon of a squeal, simble of the social network">
+        <form action="">
+            <input type="email" placeholder="Email" id="emailsign1" style="display:none" required>
+            <input type="text" placeholder="Full Name" id="fullnamesign1" style="display:none" required>
+            <input type="text" placeholder="Nickname" id="nicknamesign1" autocomplete="username" required>
+            <select class="form-select" id="type_user1" aria-label="Default select example" style="display:none">
+                <option value="normal" selected>User</option>
+                <option value="social media manager">Social Media Manager</option>
+                <option value="moderator">Squealer Moderator</option>
+            </select>
+            
+            <input type="password" placeholder="Password" id="passwordsign1" onfocus="password_security(1)" onblur="blur_password(1)" autocomplete="current-password" required>
+            <div id="pass_security1" style="display:none">
+                <label>Security</label>
+                <input type="range" id="range_security1" min="0" max="100" disabled>
+                <button id="infopassword" class="infopassword">i</button>
+                <div id="divinfopassword" class="divinfopassword" style="display:none">
+                    <ul>
+                        <li>At least 8 characters</li>
+                        <li>At least one number</li>
+                        <li>At least one spacial character</li>
+                        <li>At least one lowercase letter</li>
+                        <li>At least one uppercase letter</li>
+                    </ul>
+                </div>
+            </div>
+            <input type="button" value="Submit" onclick="login(1)">
+        </form>
+    </div>
+    <div class="formcell" id="formcell">
+        <div class="formsigncell form_front">
+            <img src="../img/icon.png" alt="icon of a squeal, simble of the social network">
+            <form action="">
+                <input type="email" placeholder="Nickname" id="nicknamesign2" autocomplete="username">
+                <input type="password" placeholder="Password" id="passwordsign2" autocomplete="current-password" required>
+                <input type="button" value="Submit" onclick="login(2)">
+                <p id="signupcell">Don't have an account? Sign Up.</p>
+                <p id="notsigncell" class="notsign">Enter without sign in</p>
+            </form>
+        </div>
+        <div class="formsigncell form_back">
+            <img src="../img/icon.png" alt="icon of a squeal, simble of the social network">
+            <form action="">
+                <input type="email" placeholder="Email" id="emailsign3">
+                <input type="text" placeholder="Full Name" id="fullnamesign3">
+                <input type="text" placeholder="Nickname" id="nicknamesign3" autocomplete="username">
+                <select class="form-select" id="type_user3" aria-label="Default select example">
+                    <option value="user" selected>User</option>
+                    <option value="social media manager">Social Media Manager</option>
+                    <option value="moderator">Squealer Moderator</option>
+                </select>
+                <input type="password" placeholder="Password" id="passwordsign3" onfocus="password_security(3)" onblur="blur_password(3)" autocomplete="current-password" required>
+                <div id="pass_security3" style="display:none">
+                    <label>Security</label>
+                    <input type="range" id="range_security3" min="0" max="100" disabled>
+                </div>
+                <input type="button" value="Submit" onclick="login(3)">
+                <p id="signincell">Already have an account? Sign In.</p>
+            </form>
+        </div>
+    </div>
+        
+    <script type="text/javascript" src="accesso.js"></script>
+</body>
+</html>

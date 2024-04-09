@@ -1,0 +1,62 @@
+<mat-sidenav-container class="example-container">
+    <mat-sidenav mode="side" opened>
+        <mat-list role="list">
+            <div class = "logoSquealer-container">
+                <img [src] = "logoUrl" alt = "logo">
+            </div>
+            <div class = "userLogged-container">
+                <ng-container *ngIf="profilePictureUrl; else defaultAvatar">
+                    <div class="mat-card-avatar user-avatar" [style.backgroundImage]="'url(' + profilePictureUrl + ')'"></div>
+                </ng-container>
+            
+                <ng-template #defaultAvatar>
+                    <span class="material-icons">person</span>
+                </ng-template>
+                <span>{{ nickname }}</span>
+            </div>
+            <div class = "pageSelector-container">
+                <mat-list-item role="listitem" [routerLink]="['/edit-profile']" [routerLinkActive]="'active'">
+                    <div class = "singleListItem-container">
+                        <mat-icon>account_circle</mat-icon>
+                        <span>Edit profile</span>
+                    </div>
+                </mat-list-item>  
+                <mat-list-item role="listitem" [routerLink]="['/create-message']" [routerLinkActive]="'active'">
+                    <div class = "singleListItem-container">
+                        <mat-icon>create</mat-icon>
+                        <span>Create message</span>
+                    </div>
+                </mat-list-item>
+                <mat-list-item role="listitem" [routerLink]="['/monitoring']" [routerLinkActive]="'active'">
+                    <div class = "singleListItem-container">
+                        <mat-icon>visibility</mat-icon>
+                        <span>Monitoring</span>
+                    </div>
+                </mat-list-item>
+                <mat-list-item role="listitem" [routerLink]="['/graphics']" [routerLinkActive]="'active'">
+                    <div class = "singleListItem-container">
+                        <mat-icon>show_chart</mat-icon>
+                        <span>Graphics</span>
+                    </div>
+                </mat-list-item>
+                <mat-list-item role="listitem" class = "settings-container" [routerLink]="['/settings']" [routerLinkActive]="'active'">
+                    <div class = "singleListItem-container">
+                        <mat-icon>groups_3</mat-icon>
+                        <span>Credits</span>
+                    </div>
+                </mat-list-item>
+                <div class = "space-impaginator"></div>
+                <div class = "logOut-container">
+                    <mat-list-item role="button" id = "logOut-listItem">
+                        <button mat-icon-button class="example-icon" id = "bottone-logout" aria-label="Example icon-button with share icon" (click)="onLogout()">
+                            <mat-icon>logout</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </div>
+            </div>
+        </mat-list>          
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

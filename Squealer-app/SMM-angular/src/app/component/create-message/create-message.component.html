@@ -1,0 +1,203 @@
+<body>
+    <mat-card class="post-input-container">
+
+        <mat-card-header>
+            <ng-container *ngIf="profilePictureUrl; else defaultAvatar">
+                <div class="mat-card-avatar user-avatar" [style.backgroundImage]="'url(' + profilePictureUrl + ')'"></div>
+            </ng-container>
+       
+            <ng-template #defaultAvatar>
+                <span class="material-icons">person</span>
+            </ng-template>
+        <div class="custom-select-wrapper">
+            <select (change)="onTypeChange($event)">
+                <option value="squeal" [selected]="!isChannel">Squeal</option>
+                <option value="channel" [selected]="isChannel">Channel</option>
+            </select>
+        </div>
+        <span class="character-counter" *ngIf="!(isChannel && accessType === 'create')">{{ remainingChars }}</span>
+        </mat-card-header>
+        
+        <div class="post-content">
+
+            <div *ngIf="!isChannel" class="example-form">
+                <div *ngIf="!isPrivate" class="example-form" id = "hashtagInputField">
+                    <div class="custom-input-field">
+                        <label for="hashtagInput" class="hashtag-label">#</label>
+                        <input id="hashtagInput" type="text" [formControl]="myControl" [(ngModel)]="hashtag" placeholder="Enter your hashtag" (input)="onHashtagInput($event)" />
+                    </div>
+                </div>   
+            </div>
+
+            <div class="channel-input-container" style="position: relative;">
+                <div *ngIf="isChannel" class="custom-input-field" id="channeInputFIeld">
+                    <label for="channelInput" class="channel-label">&#64;</label>
+                    <input id="channelInput" type="text" [formControl]="channelControl" [(ngModel)]="channelName" 
+                    placeholder="Inserisci nome canale" (input)="onChannelInput($event)"/>
+                    <div *ngIf="suggestedChannels.length" class="suggested-channels">
+                        <div *ngFor="let channel of suggestedChannels" (click)="selectSuggestedChannel(channel)">
+                            {{ channel.name }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="(channelHaveDeafault && (isChannelNameValid))" class = "defaultMessage-Container">
+                <div style="display:flex; flex-direction: row;">
+                    <h3>This channel have default message avaible</h3>
+                    <button *ngIf = "!showDeafaultMessage" (click)="showDeafaultMessage = true" class="icon-button" style="margin-top: -1%;"><i class="material-icons">expand_more</i></button>
+                    <button *ngIf = "showDeafaultMessage" (click)="showDeafaultMessage = false" class="icon-button" style="margin-top: -1%;"><i class="material-icons">expand_less</i></button>
+                </div>
+                <div *ngIf="showDeafaultMessage">
+                    <h2 style="margin-bottom: 0%;">Default message</h2>
+                    <ul style = "padding-left: 30px;">
+                        <ng-container *ngFor="let message of channelSelected.list_mess">
+                            <li id="deafaultList" *ngIf="message.request" (click)="selectDefaultMessage(message)" [ngClass]="{'selectedDeafaul-custom': selectedDefaultMessage === message}">
+                                {{ message.request }}
+                            </li>
+                        </ng-container>                    
+                    </ul>
+                    <div style="display:flex; flex-direction: row;" *ngIf="channelHaveRepeat">
+                        <h3>Repeat message</h3>
+                        <div *ngIf="channelHaveRepeat" style = "margin-left: 2%; margin-right: 2%;">
+                            <button class="icon-button"  (click)="processRepeatMessage()"><i class="material-icons">play_circle</i></button>
+                        </div>
+                        <div *ngIf="channelHaveRepeat">
+                            <button class="icon-button" (click)="stopProcessRepeatMessage()"><i class="material-icons">block</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-textarea" *ngIf="(!showDeafaultMessage) || (!isChannelNameValid)">
+                <textarea 
+                    placeholder="What are you thinking about?" 
+                    [attr.maxlength]="charLeftUser"
+                    (input)="updateCharLeftUser($event)"
+                    [(ngModel)]="userText" 
+                    (click)="setCursorAtStart($event)">
+                </textarea>
+            </div>
+            
+        </div>
+
+        <!-- Image container -->
+        <div *ngIf="sentImageUrl" class="sent-image-container">
+            <div class="image-with-close">
+              <img [src]="sentImageUrl" alt="Immagine inviata" class="sent-image" />
+              <span class="close-icon" (click)="removeSentImage()">&#10006;</span>
+            </div>
+        </div>
+
+        <!-- Video container -->
+        <div *ngIf="sentVideoUrl" class="sent-video-container">
+            <video [src]="sentVideoUrl" controls>
+                Your browser does not support the video tag.
+            </video>
+            <span class="close-icon" (click)="removeSentVideo()">&#10006;</span>
+        </div>
+           
+        <!-- Link container -->
+        <div *ngIf="sentLink" class="sent-link-container">
+            <a [href]="sentLink" target="_blank">{{ sentLink }}</a>
+            <span class="remove-link-icon" (click)="removeSentLink()">&#10006;</span>
+        </div>
+
+        <!-- Map container -->
+        <div *ngIf="isMapActive" id="leaflet-map-container">
+            <div id="leaflet-map" style="height: 300px;"></div>
+            <button class="close-map-button" (click)="removeMap()">&#10006;</button>
+        </div>
+          
+          
+        <mat-card-actions *ngIf="(!(isChannel && accessType === 'create')) && (!showDeafaultMessage) || (!isChannelNameValid)">
+            <div class="input-icons">
+                <button class="icon-button" (click)="openLinkDialog()"><i class="material-icons">attach_file</i></button>
+                <button class="icon-button" (click)="openCameraDialog()"><i class="material-icons">photo_camera</i></button>
+                <button class="icon-button" (click)="openVideoDialog()"><i class="material-icons">videocam</i></button>
+                <button class="icon-button" (click)="getUserLocation()"><i class="material-icons">place</i></button>
+                <button class="icon-button" (click)="openMapModal()"><i class="material-icons">pin_drop</i></button>
+                <button class="icon-button send-icon" [disabled]="isSubmitting" (click)="controlHashtagExist()" *ngIf="!isChannel">
+                    <i class="material-icons">send</i>
+                </button>
+                <button class="icon-button send-icon" [disabled]="!isChannelNameValid || isSubmitting" (click)="createChannelSqueal()" *ngIf="isChannel">
+                    <i class="material-icons" *ngIf="isChannel">send</i>
+                </button>
+            </div>              
+        </mat-card-actions>
+
+        <mat-card-actions *ngIf="selectedDefaultMessage">
+            <div class="input-icons">
+                <button class="icon-button send-icon" (click)="processDefaultMessage()"><i class="material-icons">send</i></button>
+            </div>
+        </mat-card-actions>
+
+        <!--Modale camera-->
+        <div class="camera-modal" *ngIf="showCameraModal">
+            <div class="camera-modal-content">
+              <h2>Upload or Take a Photo</h2>
+              <video #videoElement width="300px" height="300px" style="display:block; width: 300px; height: 300px;"></video>
+              <canvas #canvasElement width="300px" height="300px" style="display:none; width: 300px; height: 300px;"></canvas>
+                <div class = "camera-modal-buttons">
+                    <button class="icon-button" (click)="capturePhoto()"><i class="material-icons">photo_camera</i></button>
+                    <label for="file-input" class="icon-button">
+                        <i class="material-icons">file_upload</i>
+                    </label>
+                    <input type="file" id="file-input" accept="image/*,video/*,.gif" (change)="onFileSelected($event)" hidden>                    
+                    <button class="icon-button" (click)="closeCameraModal()"><i class="material-icons">close</i></button>
+                    <button class="icon-button send-icon" (click)="sendImage()"><i class="material-icons">send</i></button>
+                </div>
+            </div>
+        </div>
+
+        <!--Modale video-->
+        <div class="video-modal" *ngIf="showVideoModal">
+            <div class="video-modal-content">
+              <h2>Upload or Record a Video</h2>
+              <video *ngIf="videoPreviewUrl" [src]="videoPreviewUrl" controls style="width: 300px; height: 300px;"></video>
+                <div class = "video-modal-buttons">
+                    <label for="file-input" class="icon-button">
+                        <i class="material-icons">file_upload</i>
+                    </label>
+                    <input type="file" id="file-input" accept="video/*,.gif" (change)="onFileSelected($event)" hidden>                    
+                    <button class="icon-button" (click)="closeVideoModal()"><i class="material-icons">close</i></button>
+                    <button class="icon-button send-icon" (click)="sendVideo()"><i class="material-icons">send</i></button>
+                </div>
+            </div>
+        </div>
+
+        <!--Modale link-->
+        <div class="link-modal" *ngIf="showLinkModal">
+            <div class="link-modal-content">
+            <h2>Insert Link</h2>
+            <input type="text" [(ngModel)]="linkInput" placeholder="Insert your link here">
+            <div class="modal-actions">
+                <button (click)="closeLinkModal()">Close</button>
+                <button (click)="validateAndSendLink()">Send</button>
+            </div>
+            </div>
+        </div>
+
+        <!--Modale mappa custom-->
+        <div class="map-modal" *ngIf="showMapModal">
+            <div class="map-modal-content">
+                <h2>Choose Location</h2>
+                <div id="map-container" style="height: 400px;"></div>
+                <button (click)="confirmLocation()">Confirm Location</button>
+                <button (click)="closeMapModal()">Close</button>
+            </div>
+        </div>
+  
+        <!-- Pop up mancanza caratteri -->
+        <div *ngIf="showPurchasePopup" class="remainingChars-modal">
+            <div class="remainingChars-modal-content">
+                <h2>Insufficient Characters</h2>
+                <p>Do you want to buy more characters?</p>
+                <button (click)="redirectToEditProfile()">Buy Characters</button>
+                <button (click)="closePopup()">Close</button>
+            </div>
+        </div>
+    
+    </mat-card>
+  
+</body>

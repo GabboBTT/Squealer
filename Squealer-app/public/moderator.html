@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squealer Moderator Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="img/icon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="../img/squealer.png" alt="icon of Squealer" height="60" style="margin-left:5%;cursor:default">
+            </a>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <button class="nav-link" onclick="squealbtnclick()" style="color:black;font-size:20px;margin-left:5%">Squeal</button>
+              <button class="nav-link" onclick="usersbtnclick()" style="color:black;font-size:20px;margin-left:5%">Users</button>
+              <button class="nav-link" onclick="channelsbtnclick()" style="color:black;font-size:20px;margin-left:5%">Channels</button>
+            </div>
+          </div>
+          <div class="navbarcell">
+              <button class="nav-link" onclick="squealbtnclick()" style="color:black;font-size:24px; margin-left:7%"><i class="bi-chat"></i></button>
+              <button class="nav-link" onclick="usersbtnclick()" style="color:black;font-size:24px; margin-left:7%"><i class="bi-people"></i></button>
+              <button class="nav-link" onclick="channelsbtnclick()" style="color:black;font-size:24px; margin-left:7%"><i class="bi-collection"></i></button>
+            </div>
+          <div class="d-flex">
+            <button id="gotosquealer" class="btn btn-outline-success">Go to Squealer App</button>
+          </div>
+        </div>
+    </nav>
+    <main>
+        <section id="squealhome">
+            <nav class="search">
+                <img src="../img/search.png" alt="search image">
+                <input type="text" id="searchsqueal" placeholder="Search sender">
+            </nav>
+            <div class="filter">
+                    <p>Filter by:</p>
+                    <select id="filtersqueal" class="form-select" style="color:black; background-color: white; border:1px solid black" aria-label="Filter sender">
+                        <option value="sender" selected>Sender</option>
+                        <option value="receiver">Receiver</option>
+                    </select>
+                    <p>Search date:</p>
+                    <input type="date" id="datesqueal">
+            </div>
+            <section class="listsearch_find" id="listsqueals_find"></section>
+            <section class="edithome" id="sectioneditsqueal" style="display:none;">
+                <button type="button" class="btn-close" aria-label="Close" id="closeeditsqueal" style="position:absolute;top:3%;right:2%;font-size:30px;z-index:2"></button>
+                    <nav class="nav">
+                        <button id="sectioneditsquealreceiverssection" style="border-bottom:1px solid black">Receivers</button>
+                        <button id="sectioneditsquealreactionssection">Reactions</button>
+                    </nav>
+                    <main id="sectioneditsquealreceivers">
+                        <h3 style="margin-bottom:2%">Receivers</h3>
+                        <div style="height:50px; position:relative; width:80%">
+                            <nav class="search">
+                                <img src="../img/search.png" alt="search image">
+                                <input type="text" id="searchaddreceivers" placeholder="Add receivers">
+                            </nav>
+                        </div>
+                        <div class="sectioneditsquealreceiverslist" style="overflow-y:scroll; display:flex; flex-direction:column; justify-content: unset; height: 80%;" id="sectioneditsquealreceiverslist"></div>
+                    </main>
+                    <main id="sectioneditsquealreactions" style="display: none;">
+                    </main>
+            </section>
+        </section>
+        <section id="usershome" style="display:none">
+            <nav class="search">
+                <img src="../img/search.png" alt="search image">
+                <input type="text" id="searchuser" placeholder="Search user">
+            </nav>
+            <div class="filter">
+                <p>Filter type:</p>
+                <select id="filterusertype" class="form-select" style="color:black; background-color: white; border:1px solid black" aria-label="Filter users">
+                    <option value="all" selected>All</option>
+                    <option value="user">User</option>
+                    <option value="social media manager">Social Media Manager</option>
+                    <option value="moderator">Moderator</option>
+                </select>
+                <p>Filter popularity:</p>
+                <select id="filteruserpopularity" class="form-select" style="color:black; background-color: white; border:1px solid black" aria-label="Filter users">
+                    <option value="nothing" selected>Not selected</option>
+                    <option value="top">Top-down</option>
+                    <option value="down">Down-top</option>
+                </select>
+            </div>
+            <section class="listsearch_find" id="listuser_find"></section>
+            <section class="edithome" id="sectionedituser" style="display:none">
+                <button type="button" class="btn-close" aria-label="Close" id="closeedituser" style="position:absolute;top:3%;right:2%;font-size:30px;z-index:2"></button>
+                <header>
+                    <img src="" alt="profile photo" id="sectionedituserphoto">
+                    <h3 id="sectioneditusername"></h3>
+                    <button id="sectionedituserblock" class="btn btn-outline-primary"></button>
+                </header>
+                <main>
+                    <div>
+                        <p id="sectionedituserdaily"></p>
+                        <input type="number" placeholder="Insert characters" id="sectionedituserdailyinsert">
+                        <button onclick="addchardaily()" class="btn btn-outline-primary">Add</button>
+                    </div>
+                    <div>
+                        <p id="sectionedituserweekly"></p>
+                        <input type="number" placeholder="Insert characters" id="sectionedituserweeklyinsert">
+                        <button onclick="addcharweekly()" class="btn btn-outline-primary">Add</button>
+                    </div>
+                    <div>
+                        <p id="sectioneditusermonthly"></p>
+                        <input type="number" placeholder="Insert characters" id="sectioneditusermonthlyinsert">
+                        <button onclick="addcharmonthly()" class="btn btn-outline-primary">Add</button>
+                    </div>
+                </main>
+            </section>
+        </section>
+        <section id="channelshome" style="display:none">
+            <nav class="search">
+                <img src="../img/search.png" alt="search image">
+                <input type="text" id="searchchannel" placeholder="Search channel">
+            </nav>
+            <div class="filter">
+                <p>Filter type:</p>
+                <select id="filterchanneltype" class="form-select" style="color:black; background-color: white; border:1px solid black" aria-label="Filter channels">
+                    <option value="channels" selected>channels</option>
+                    <option value="CHANNELS">CHANNELS</option>
+                </select>
+                <p id="filterchannelp">Filter by:</p>
+                <select id="filterchannel" class="form-select" style="color:black; background-color: white; border:1px solid black" aria-label="Filter channels">
+                    <option value="name" selected>Name</option>
+                    <option value="owner">Owner</option>
+                    <option value="post">Number of posts</option>
+                </select>
+                <p id="filterchannelpopularityp">Filter popularity:</p>
+                <select id="filterchannelpopularity" class="form-select" style="color:black; background-color: white; border:1px solid black" aria-label="Filter channels">
+                    <option value="nothing" selected>Not selected</option>
+                    <option value="top">Top-down</option>
+                    <option value="down">Down-top</option>
+                </select>
+                <button class="btn btn-outline-info" id="createnewCHANNEL" style="display:none">Create new CHANNEL</button>
+            </div>
+            <section class="listsearch_find" id="listchannel_find"></section>
+                <section class="edithome" id="sectioneditchannel" style="display:none">
+                    <button type="button" class="btn-close" aria-label="Close" id="closeeditchannel" style="position:absolute;top:3%;right:2%;font-size:30px;z-index:2"></button>
+                    <header>
+                        <img src="" alt="channel photo" id="sectioneditchannelphoto">
+                        <input type="text" id="sectioneditchannelname">
+                        <button id="sectioneditchannelchangename" class="btn btn-outline-primary" style="margin-left:1em;margin-right:1em">Edit name</button>
+                        <button id="sectioneditchannelblock" class="btn btn-outline-primary"></button>
+                    </header>
+                    <main id="sectioneditchannelowners">
+                        <h3>Users</h3>
+                    </main>
+                </section>
+                <section class="edithome overflow-y-scroll" id="sectioneditCHANNEL" style="display:none">
+                    <button type="button" class="btn-close" aria-label="Close" id="closeeditCHANNEL" style="position:absolute;top:3%;right:2%;font-size:30px;z-index:2"></button>
+                    <header>
+                        <img src="" alt="CHANNEL photo" id="sectioneditCHANNELphoto">
+                        <h3 id="sectioneditCHANNELname"></h3>
+                        <button id="sectioneditCHANNELdelete" class="btn btn-outline-primary">Delete</button>
+                    </header>
+                    <textarea class="text-center" id="sectioneditCHANNELdescription" readonly placeholder="CHANNEL bio" style="min-height:50px"></textarea>
+                    <section class="d-flex flex-column align-items-center" id="sectioneditCHANNELsquealers">
+                        
+                    </section>
+                </section>
+                <section class="addhome flex-column position-absolute overflow-y-scroll d-none" id="sectioncreateCHANNEL" style="display:none; background-color: rgb(238,238,238);">
+                    <button type="button" class="btn-close" aria-label="Close" id="closecreateCHANNEL" style="position:absolute;top:3%;right:2%;font-size:30px;z-index:2"></button>
+                        <header>
+                            <input type="button" class="d-none" id="sectioncreateCHANNELphoto">
+                            <label for="sectioncreateCHANNELphoto" style="position:relative; display:flex; align-items: center; justify-content: center;"><img src="img/image.svg" id="sectioncreateCHANNELphotoimg" style="filter:invert(1); height:30px; width:30px"></label>
+                            <input type="text" class="me-3" placeholder="Name CHANNEL" id="sectioncreateCHANNELname" required>
+                            <button class="btn btn-outline-primary" style="margin:0.5em; margin-bottom:18px" id="btncreatenewCHANNEL">Create</button>
+                        </header>
+                        <main>
+                            <textarea id="sectioncreateCHANNELdescription" placeholder="Description"></textarea>
+                            <div>
+                                <p class="me-4 mt-2">Silenceable</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="sectioncreateCHANNELsilenceable">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div style="margin-top:2%; min-height:50px;">
+                                <nav class="searchfixed">
+                                    <img src="../img/search.png" alt="search image">
+                                    <input type="text" id="searchaddownerCHANNEL" placeholder="Search User">
+                                </nav>
+                            </div>
+                            <section class="d-none" id="searchaddownerCHANNELlist">
+
+                            </section>
+                            <button class="btn btn-outline-info m-2" id="viewCHANNELowners">View CHANNEL owners</button>
+                            <section class="d-none" id="viewCHANNELownerslist">
+                                
+                            </section>
+                            <section class="position-relative">
+                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <section class="accordion-item bg-transparent m-0" style="width:100%">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded-2 bg-white" id="addautomaticmessage" style="box-shadow: none;">Add automatic message</button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse">
+                                            <section class="accordion-body" style="width:100%">
+                                                <select class="form-select mt-0 bg-white" id="typenewmessageCHANNEL" aria-label="Default select example">
+                                                    <option value="Welcome" selected>Welcome</option>
+                                                    <option value="Answer">Answer</option>
+                                                    <option value="Repeat">Repeat</option>
+                                                    <option value="Casual Images">Casual Images</option>
+                                                    <option value="News">News</option>
+                                                    <option value="WikiInfo">Wiki Info</option>
+                                                </select>
+                                                <div class="card border-success mt-3" style="min-width:400px" id="squealnewmessageCHANNEL">
+                                                    <section style="width:100%">
+                                                        <div class="card-header text-center" style="width:100%">
+                                                            <textarea class="bg-transparent border-0" id="textnewmessageCHANNEL" style="width:100%; resize: none;" placeholder="What're you thinking about?"></textarea>
+                                                        </div>
+                                                        <div class="card-body" id="inputnewmessageCHANNEL" style="flex-direction: column;">
+                                                            <section id="map" class="d-none">
+                                                                
+                                                            </section>
+                                                            <div style="width:200px; max-height:150px; position:relative" id="photonewmessage"></div>
+                                                            <div style="width:200px; max-height:150px; position:relative" class="mt-2" id="videonewmessage"></div>
+                                                            <div id="linknewmessageCHANNEL" style="width:100%"></div>
+                                                        </div>
+                                                        <div class="card-footer" style="height:50px">
+                                                            <label style="cursor:pointer" onclick="showModal(1)"><i class="bi-link-45deg me-3"></i></label>
+                                                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="d-none" id="imgnewmessageCHANNEL">
+                                                            <label style="cursor:pointer"><i class="bi-camera me-3" onclick="accesscamera(1)"></i></label>
+                                                            <video src="" class="d-none" id="videonewmessageCHANNEL"></video>
+                                                            <label style="cursor:pointer"><i class="bi-camera-video me-3" onclick="accessvideo(1)"></i></label>
+                                                            <label style="cursor:pointer"><i class="bi-geo-alt me-3" onclick="getposition(1)"></i></label>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                                <div class="card border-success mt-3 d-none" id="requestnewmessageCHANNEL" style="min-width:400px">
+                                                    <section style="width:100%">
+                                                        <div class="card-header text-center" style="width:100%">
+                                                        <input type="text" class="bg-transparent border-0" id="userrequestnewmessageCHANNEL" style="width:100%" placeholder="/Request message">
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                                <div class="card border-success mt-3 d-none" id="repeatnewmessageCHANNEL" style="min-width:400px">
+                                                    <section style="width:100%">
+                                                        <div class="card-header text-center" style="width:100%">
+                                                        <input type="number" class="bg-transparent border-0" id="userrepeatnewmessageCHANNEL" style="width:100%" placeholder="Number of seconds">
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                                <button class="btn btn-outline-primary mt-3" id="addnewmessageCHANNEL">Add message</button>
+                                            </section>
+                                        </div>
+                                    </section>
+                                </div>
+                            </section>
+                            <button class="btn btn-outline-info m-2" id="viewCHANNELmessages">View CHANNEL messages</button>
+                            <section class="d-none" id="viewCHANNELmessageslist" style="width:80%">
+                                
+                            </section>
+                        </main>
+                </section>
+                <section class="addhome flex-column position-absolute overflow-y-scroll d-none" id="sectioncreateCHANNELphototype" style="background-color: white; width:100%; height:100%">
+                    <button type="button" class="btn-close" aria-label="Close" id="closecreateCHANNELphototype" style="position:absolute;top:3%;right:2%;font-size:30px;z-index:2"></button>
+                    <main class="d-flex flex-column" style="width:100%; align-items: center; height:30%; top:70%; justify-content: center;">
+                        <button id="takephotoCHANNEL" class="btn btn-primary" style="background-color: rgba(105, 105, 105, 0.463); width: 70%; display: flex; align-items: center; justify-content: center; border:0px; margin-bottom:1em">
+                            <i class="bi-camera me-2"></i>
+                        Take new picture</button>
+                        <input type="file" id="selectpictureCHANNEL" class="d-none" accept="image/*">
+                        <label for="selectpictureCHANNEL" style="background-color: rgba(105, 105, 105, 0.463); color:white; width: 70%; border: 0px; margin-bottom: 1em; padding-top: 0.5em; padding-bottom: 0.5em; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi-image me-2"></i>
+                            Select new picture</label>
+                        <button id="deletephotoCHANNEL" type="button" class="btn btn-primary" style="background-color: rgba(105, 105, 105, 0.463); width: 70%; border: 0px; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi-trash3 me-2"></i>
+                            Delete picture</button>
+                    </main>
+                </section>
+                <section id="linkModal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <div class="modal-header" style="display:flex; flex-direction: row; justify-content: space-between; background: #fefefe;">
+                            <h3>Inserisci Link</h3>
+                            <span class="close-button" onclick="hideModal()">&times;</span>
+                        </div>
+                        <div class="modal-body" style="display:flex; flex-direction: row; justify-content: space-between; background: #fefefe;">
+                            <input type="text" id="inputLink" placeholder="Inserisci il tuo link qui" style="width:80%">
+                            <button id="submitLink" onclick="handleSubmitLink()" class="btn btn-primary">Invia</button>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </main>
+    <section id="writenewsqueal" class="container-fluid d-none position-absolute flex-column overflow-y-scroll align-items-center" style="display:flex;width:100%; height:100%; top:0; left:0; z-index: 1002; background-color:rgb(238,238,238)">
+        <button type="button" class="btn-close" aria-label="Close" id="closewritenewsqueal" style="position:absolute;top:3%;right:2%;font-size:30px;z-index:2"></button>
+        <h3 class="text-center mt-5 mb-4">Write new Squeal</h3>
+        <div class="card border-success mt-3 d-flex flex-row" style="width:80%;min-height:200px">
+            <section style="width:80%">
+                <div class="card-body text-center d-flex align-items-center flex-column" style="width:100%;min-height:150px">
+                    <textarea class="bg-transparent border-0" id="textnewsqueal" style="width:100%; resize: none;" placeholder="What're you thinking about?"></textarea>
+                    <section id="mapnewsqueal" class="d-none" style="width:100%; height: 200px; position: relative; margin-top: 20px; margin-bottom: 20px">
+                        <button style="position: absolute; top: 10px; right: 10px; z-index: 1000; color:white; background-color: red; border-radius:8px; border:0" onclick="deletemap()"><i class="bi-x" style="font-size:20px"></i></button>
+                        <button style="position: absolute; bottom: 10px; left: 10px; z-index: 1000; border-radius:8px; border:0; padding:6px 12px 6px 12px;" onclick="openGoogleMaps()">Open Map</button>
+                    </section>
+                    <div style="width:200px; max-height:150px; position:relative" class="mt-2" id="photonewsqueal"></div>
+                    <div style="width:200px; max-height:150px; position:relative" class="mt-2" id="videonewsqueal"></div>
+                    <div id="linknewsqueal" style="width:100%; text-align: left;"></div>
+                </div>
+                <div class="card-footer d-flex justify-content-center" style="height:50px">
+                    <label style="cursor:pointer" onclick="showModal(3)"><i class="bi-link-45deg me-3"></i></label>
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="d-none" id="imgnewsqueal">
+                    <label style="cursor:pointer"><i class="bi-camera me-3" onclick="accesscamera(3)"></i></label>
+                    <video src="" class="d-none" id="videonewsquealCHANNEL"></video>
+                    <label style="cursor:pointer"><i class="bi-camera-video me-3" onclick="accessvideo(3)"></i></label>
+                    <label style="cursor:pointer"><i class="bi-geo-alt me-3" onclick="getposition(3)"></i></label>
+                </div>
+            </section>
+            <section class="d-flex align-items-center justify-content-center" style="width:20%;height:100%;">
+                <i class="bi-send" style="font-size:32px; cursor:pointer" id="sendnewsqueal"></i>
+            </section>
+        </div>
+    </section>
+    <section id="access-camera" class="container-fluid position-absolute d-none flex-column bg-black overflow-y-scroll align-items-center" style="width:100%; height:100%; top:0; left:0; z-index:1003">
+        <button type="button" class="btn-close" aria-label="Close" id="closetakephoto" style="position:absolute;top:3%;right:2%;font-size:30px;filter:invert(1);z-index:2"></button>
+        <h1 class="text-light mt-3">Capture or select photo</h1>
+        <video id="webcam" style="max-height:300px" autoplay></video>
+        <canvas id="canvas" style="display: none"></canvas>
+        <img id="fotoCatturata" class="d-none" src="" alt="Foto Catturata" style="height:300px; width:400px">
+        <button class="btn btn-outline-primary m-3" id="avviaFotocamera">Open webcam</button>
+        <button class="btn btn-outline-primary m-3 d-none" id="catturaFoto">Take photo</button>
+        <input type="file" id="selectpicturewebcam" class="d-none" accept="image/*" onchange="loadImage(event)">
+        <label for="selectpicturewebcam" id="labelpicturewebcam" class="btn btn-outline-primary m-3">Select picture</label>
+        <button id="usephoto" class="btn btn-outline-primary m-3 d-none">Use photo</button>
+    </section>
+    <section id="access-video" class="container-fluid position-absolute d-none flex-column bg-black overflow-y-scroll align-items-center" style="width:100%; height:100%; top:0; left:0; z-index:1003">
+        <button type="button" class="btn-close" aria-label="Close" id="closetakevideo" style="position:absolute;top:3%;right:2%;font-size:30px;filter:invert(1);z-index:2"></button>
+        <h1 class="text-light mt-3">Load a Video</h1>
+        <video id="recordedVideo" controls class="d-none" style="max-width:300px"></video>
+        <label class="btn btn-primary">
+            Load video
+            <input type="file" hidden id="videoInput" accept="video/*"/>
+    </section>
+    <section id="preload" class="d-none" style="position:absolute; width:100%; height:100%; background-color: rgba(255, 255, 255, 0.5); z-index:1050; top:0px; display:flex; align-items:center; justify-content:center">
+        <lord-icon src="https://cdn.lordicon.com/pxwxddbb.json" trigger="loop" style="width:250px;height:250px">
+        </lord-icon>
+    </section>
+    <script type="text/javascript" src="script.js"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+</body>
+</html>

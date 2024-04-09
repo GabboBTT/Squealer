@@ -1,0 +1,227 @@
+body{
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 50vh;
+}
+/*Utente modifica VIP o modifica foto*/
+.userLoggedActionInline-container{
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  width: fit-content;
+  margin-top: 2%;
+}
+  
+  /*Utente loggato*/
+  .userLogged-container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user-avatar {
+    background-size: cover;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-position: center; 
+    background-repeat: no-repeat; /* Impedisce la ripetizione dell'immagine */
+  }  
+
+  /*Azioni modfica*/
+  .action1-container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 6%;
+    justify-content: center;
+  }
+
+  .action1-container a {
+    color: blue;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+
+/* Descrizione utente */
+.description-container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2%;
+  width: 70%;
+
+}
+
+.description-container p{
+  text-align: center;
+}
+
+.description-container a {
+  color: blue;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/*Linea divider*/
+hr{
+  width: 100%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border: 0;
+  border-top: 1px solid grey;
+}
+
+/*Caratteri*/
+.characterSection-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+}
+
+.characterSection-container h2{
+  color: grey;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: bold;
+  margin-bottom: 6%;
+}
+
+.characterSection-container h3{
+  color: grey;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: bold;
+  margin-bottom: 2%;
+}
+
+.barraCaratteriRimanenti{
+  margin-bottom: 6%;
+}
+
+mat-radio-group{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+
+input{
+  background-color: transparent;
+  border: none;
+  width: 60%;
+}
+
+  /*Pagamento caratteri*/
+  .paymentMethod-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+  }
+
+  .paymentMethod-container button{
+    margin-top: 4%;
+    margin-bottom: 4%;
+  }
+
+  .custom-dialog-margin {
+    margin: 20px; 
+  }
+
+  #radioGroup-vip{
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 2560px) {
+    #pagamento-dialog{
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+  }
+  
+  @media screen and (max-width: 1440px) {
+  }
+
+  @media screen and (max-width: 768px) {
+    body{
+      width: fit-content !important;
+      overflow-x: hidden;
+    }
+
+    #amount-container{
+      display: none;
+    }
+
+    .userLoggedActionInline-container{
+      padding-left: 150px;
+      padding-right: 150px;
+    }
+
+  }
+
+  @media screen and (max-width: 576px) {
+    .userLoggedActionInline-container{
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+
+    #radioGroup-vip{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #pagamento-dialog{
+      width: 300px !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+  }
+
+  @media screen and (max-width: 426px) {
+    #pagamento-dialog{
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+
+  @media screen and (max-width: 350px) {
+    body{
+      width: 400px !important;
+    }
+
+    #pagamento-dialog{
+      width: 200px !important;
+    }
+    
+  }

@@ -1,0 +1,255 @@
+.fullscreen-icon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100000;
+  background-color: rgba(0, 0, 0, 0.8); /* Opacità di sfondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+    
+
+/*Sezione header*/
+    .profile-image-container {
+        width: 55px; /* Dimensione predefinita */
+        height: 55px; /* Dimensione predefinita */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 2px solid white;
+        overflow: hidden;
+    }
+  
+    .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+
+    .Form-create-messagge-home option {
+    background-color: #333; /* Colore di sfondo delle opzioni */
+    color: white; /* Colore del testo delle opzioni */
+    }
+
+    .Form-create-messagge-home {
+    -webkit-appearance: none; /* Rimuove lo stile predefinito per WebKit/Blink */
+    -moz-appearance: none; /* Rimuove lo stile predefinito per Firefox */
+    appearance: none; /* Standard moderno per rimuovere lo stile predefinito */
+    background-color: transparent;
+    border-radius: 18px;
+    border: 1px solid white; /* Personalizza il bordo come desiderato */
+    color: white; /* Colore del testo nel select */
+    text-align: left !important; /* Allinea il testo a sinistra */
+    font-size: 12px;
+    width: 100px;
+    padding: 0.25rem 0.5rem; /* Aggiunge un po' di padding all'interno del select */
+    padding-left: 20px !important;
+    }
+
+    /*Sezione channel*/
+    .my-formCostum-input:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+
+    .my-formCostum-input {
+        border-color: #007bff;
+    }
+
+    .my-inputCustom-input:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+
+    .my-inputCustom-input:hover {
+        border-color: #007bff;
+    }
+
+    #buttonSend {
+        background-color: #cd9933 !important;
+        border: none !important;
+    }
+
+    @media (max-width: 2560px) {
+        #cameraModal{
+            margin-left: 50%;
+        }
+
+        #selectedUsersContainer{
+            margin-left: 8% !important;
+        }
+    }
+
+    @media (max-width: 1440px) {
+        #cameraModal{
+            margin-left: 42%;
+        }
+
+        #selectedUsersContainer{
+            margin-left: 10% !important;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        /* #card-container-create-messagge-home{
+            left: 15% !important;
+        } */
+
+        #cameraModal{
+            margin-left: 36%;
+        }
+
+        #selectedUsersContainer{
+            margin-left: 12% !important;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .profile-image-container {
+            width: 35px; /* Dimensione ridotta */
+            height: 35px; /* Dimensione ridotta */
+        }
+
+        #card-container-create-messagge-home{
+            left: 10% !important;
+            width: 90% !important;
+        } 
+
+        #cameraModal{
+            margin-left: 22%;
+        }
+
+        #selectedUsersContainer{
+            margin-left: 13% !important;
+        }
+    }
+
+    @media (max-width: 626px) {
+        .Form-create-messagge-home {
+        margin-bottom: 10px !important;
+        }
+    }
+
+    @media (max-width: 600px) {
+        #card-container-create-messagge-home{
+            left: 0% !important;
+            width: 100% !important;
+        }
+    }
+
+    @media (max-width: 426px) {
+        #card-container-create-messagge-home{
+            left: 0% !important;
+            width: 100% !important;
+        } 
+
+        #create-messagge-card{
+            width: 80% !important;
+        }
+
+        #charCounterContainer{
+            margin-top: 0% !important;
+            text-align: right !important;
+        }
+        
+        #sendMessage{
+            margin-top: 10% !important;
+        }
+
+        #cameraModal{
+            margin: 8%;
+        }
+
+        #photoAttachments{
+            width: 200px !important;
+            height: 200px !important;
+        }
+
+        #selectedUsersContainer{
+            margin-left: 14% !important;
+        }
+
+        #charColContainer{
+            width: 100% !important;
+            display: flex;
+            justify-content: center;
+        }
+
+        #profileColContainer{
+            width: 100% !important;
+            display: flex;
+            justify-content: center;
+        }
+
+        #slectionColContainer{
+            width: 100% !important;
+            display: flex;
+            justify-content: center;
+            margin-top: 4%;
+            margin-bottom: 4%;
+        }
+
+        .profile-image-container {
+            width: 45px;
+            height: 45px;
+        }
+    }
+
+    @media (max-width: 401px) {
+        .align-items-center{
+            flex-direction: column !important;
+        }
+
+        .profile-image-container {
+            margin-bottom: 10px !important;
+            width: 45px;
+            height: 45px;
+        }
+
+        #RowSelectType{
+            flex-direction: row !important;
+            justify-content: center !important;
+        }       
+    }
+
+    @media (max-width: 376px) {
+        #channelContentContainer{
+            margin-left: 0% !important;
+        }
+
+        #textAreaContentContainer{
+            margin-left: 0% !important;
+        }
+
+        #selectedUsersContainer{
+            margin-left: 10% !important;
+        }
+
+        #allegatiConainer{
+            margin-left: 0% !important;
+        }
+    }
+
+    @media (max-width: 321px) {
+        #allegatiConainer{
+            margin-left: 0% !important;
+        }
+
+        #allegatiConainer2{
+            padding: 0% !important;
+        }
+
+        #selectedUsersContainer{
+            margin-left: 10% !important;
+        }
+
+        #slectionColContainer{
+            padding: 0% !important;
+        }
+    }
+  
